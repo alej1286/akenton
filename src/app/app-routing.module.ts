@@ -5,9 +5,9 @@ import { DefaultComponent } from './Components/default/default.component';
 import { OrderComponent } from './Components/order/order.component';
 
 const routes: Routes = [
-  {path:'/', component: DefaultComponent},
+  {path:'', component: OrderComponent, pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
-    {path:'orders', component: OrderComponent}
+  {path:'orders', component: OrderComponent}
   /* children : [
     {path: 'dashboard', component: DashboardComponent},
     {path:'orders', component: OrderComponent}]
