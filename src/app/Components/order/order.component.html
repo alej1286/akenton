@@ -2,10 +2,10 @@
     <mat-card class="mat-elevation-z8">
       
       <mat-card-content>
-        <form [formGroup]="orderForm" (ngSubmit)="onFormSubmit()">
-          <table>
-            <tr>
-              <td class="tbl1">
+        <form [formGroup]="orderForm" (ngSubmit)="onFormSubmit()" >
+          <table flLayout="column" fxLayoutGap="7px" fxLayoutGap.xs="0px">
+            <tr fxLayout="row" fxLayout.xs="column" fxLayoutGap="7px" fxLayoutGap.sm="0px">
+              <td class="tbl1" fxFlex appearance="outline">
                 <mat-form-field class="demo-full-width">
                   <input formControlName="descr" matTooltip="Enter Descr" matInput placeholder="descr" autocomplete="off">
                 </mat-form-field>
@@ -13,7 +13,7 @@
                   <span *ngIf="!orderForm.get('descr').value && orderForm.get('descr').touched"></span>
                 </mat-error>
               </td>
-              <td class="tbl1">
+              <td class="tbl1" fxFlex appearance="outline">
                 <mat-form-field class="demo-full-width">
                   <input formControlName="pallets" matTooltip="Enter Pallets" matInput placeholder="Pallets" autocomplete="off">
                 </mat-form-field>
@@ -31,7 +31,7 @@
                 </mat-error>
               </td> -->
 
-              <td class="tbl1">
+              <td class="tbl1" fxFlex appearance="outline">
                 <mat-form-field>
                   <mat-label>Tipo</mat-label>
                   <mat-select (selectionChange)="FillStateDDL($event)" formControlName="tipo" matTooltip="Select Tipo" autocomplete="off">
