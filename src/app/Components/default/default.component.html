@@ -5,7 +5,7 @@
     [mode]="screenWidth > 640 ? 'side' : 'over'"
     [opened]="screenWidth > 640"
   >
-    <app-sidebar></app-sidebar>
+    <app-sidebar (onButtonClicked)="clickMenu($event)"></app-sidebar>
   </mat-sidenav>
 
   <mat-sidenav-content>

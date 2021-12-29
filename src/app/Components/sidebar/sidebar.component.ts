@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDrawer, MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 
 @Component({
@@ -7,6 +7,7 @@ import { MatDrawer, MatDrawerMode, MatSidenav } from '@angular/material/sidenav'
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  @Output() onButtonClicked: EventEmitter<string> = new EventEmitter();
   /* @ViewChild('sidebar') sidenav: MatSidenav;
   mode:boolean = true; */
   constructor() { }
@@ -17,6 +18,10 @@ export class SidebarComponent implements OnInit {
 
   setSidebarOpened(str:boolean){
     //this.mode = str;
+  }
+
+  buttonClicked() {
+    this.onButtonClicked.emit("Desde el hijo.");  
   }
 
   toggle(){

@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Tipo } from 'src/app/Models/tipo';
-import { OrdersService } from 'src/app/Services/orders.service';
 import { TiposService } from 'src/app/Services/tipos.service';
 
 @Component({
@@ -12,7 +10,7 @@ export class TDTipoBolsaTranslatorComponent implements OnInit {
   @Input() tipoId: number;
   tipoDescr: string = '';
 
-  constructor(private OrdersService: OrdersService, private TiposService: TiposService) {}
+  constructor(private TiposService: TiposService) {}
 
   ngOnInit(): void {
     

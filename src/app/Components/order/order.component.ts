@@ -13,25 +13,12 @@ import { Tipo } from 'src/app/Models/tipo';
 import { Client } from 'src/app/Models/client';
 import { TiposService } from 'src/app/Services/tipos.service';
 import { ClientsService } from 'src/app/Services/clients.service';
+import { EstadosService } from 'src/app/Services/estados.service';
+import { Estado } from 'src/app/Models/estado';
 
 
 
 
-interface Country {
-  CountryId: string;
-  CountryName: string;
-}
-interface State {
-  StateId: string;
-  StateName: string;
-  CountryId: string;
-}
-interface City {
-  Cityid: string;
-  CityName: string;
-  StateId: string;
-  CountryId: string;
-}
 
 @Component({
   selector: 'app-order',
@@ -47,35 +34,37 @@ export class OrderComponent implements OnInit {
   orderIdUpdate = null;
   massage = null;
   
-  allCountry: Observable<Country[]>;
+  //allCountry: Observable<Country[]>;
   allTipo: Observable<Tipo[]>;
   allClient: Observable<Client[]>;
   tipos : Tipo[];
 
   clients : Client[];
 
-  allState: Observable<State[]>;
-  allCity: Observable<City[]>;
+  //allState: Observable<State[]>;
+  //allCity: Observable<City[]>;
   
-  CountryId = null;
+  //CountryId = null;
   TipoId = null;
   ClientId = null;
+  EstadoId = null;
   
-  StateId = null;
-  CityId = null;
-  SelectedDate = null;
-  isMale = true;
-  isFeMale = false;
+  //StateId = null;
+  //CityId = null;
+  //SelectedDate = null;
+  //isMale = true;
+  //isFeMale = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  displayedColumns: string[] = ['select', 'client', 'tipo', 'pallets', 'descr', 'edit', 'delete'];
+  displayedColumns: string[] = ['select', 'client', 'tipo', 'pallets', 'estado','descr', 'edit', 'delete'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  estados: Estado[];
+  allEstado: Observable<Estado[]>;
 
-  constructor(private formbulider: FormBuilder, private OrdersService: OrdersService, private _snackBar: MatSnackBar, public dialog: MatDialog, private TiposService: TiposService, private ClientsService: ClientsService) {
+  constructor(private formbulider: FormBuilder, private OrdersService: OrdersService, private _snackBar: MatSnackBar, public dialog: MatDialog, private TiposService: TiposService, private ClientsService: ClientsService, private EstadosService: EstadosService) {
     this.OrdersService.getAllOrders().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
-      //console.log(this.dataSource); 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -84,14 +73,17 @@ export class OrderComponent implements OnInit {
     this.TiposService.getAllTipos()
     .subscribe(tipos => {
         this.tipos = tipos as Tipo[]
-        //console.log(this.tipos);
     })
   
     
     this.ClientsService.getAllClients()
     .subscribe(clients => {
         this.clients = clients as Client[]
-        //console.log(this.tipos);
+    })
+
+    this.EstadosService.getAllEstados()
+    .subscribe(estados => {
+        this.estados = estados as Estado[]
     })
   
   }
@@ -104,12 +96,14 @@ export class OrderComponent implements OnInit {
       client: ['', [Validators.required]],
       tipo: ['', [Validators.required]],
       pallets: ['', [Validators.required]],
+      estado: ['', [Validators.required]],
       descr: ['', [Validators.required]]
     });
-    this.FillCountryDDL();
     this.FillTiposDDL();
     this.FillClientsDDL();
     this.loadallOrders();
+    this.FillEstadosDDL();
+    
     /* this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort; */
   }
@@ -138,7 +132,6 @@ export class OrderComponent implements OnInit {
           debugger;
     
           this.OrdersService.deleteOrderById(order.id).subscribe(result => {
-            console.log(result);
             this.SavedSuccessful(2);
             this.loadallOrders();
           });
@@ -191,6 +184,7 @@ export class OrderComponent implements OnInit {
       this.orderForm.controls['descr'].setValue(order[0].descr);
       this.orderForm.controls['pallets'].setValue(order[0].pallets);
       this.orderForm.controls['tipo'].setValue(order[0].tipo);
+      this.orderForm.controls['estado'].setValue(order[0].estado);
       /* this.allState = this.OrdersService.getState(employee.CountryId);
       this.CountryId = employee.CountryId;
       this.orderForm.controls['State'].setValue(employee.StateId);
@@ -225,6 +219,7 @@ export class OrderComponent implements OnInit {
       employee.Cityid = this.CityId; */
       order.tipo = this.TipoId;
       order.client = this.ClientId;
+      order.estado = this.EstadoId;
       //console.log(this.orderIdUpdate,order);
       this.OrdersService.updateOrder(this.orderIdUpdate,order).subscribe(() => {
         this.dataSaved = true;
@@ -250,14 +245,16 @@ export class OrderComponent implements OnInit {
 
   }
 
-  FillCountryDDL() {
-    //this.allCountry = this.OrdersService.getCountry();
-    this.allState = this.StateId = this.allCity = this.CityId = null;
-  }
-
-  FillTiposDDL(/* SelTipoID */) {
+  
+  FillTiposDDL() {
     
     this.allTipo = this.TiposService.getAllTipos();
+    
+  } 
+
+  FillEstadosDDL() {
+    
+    this.allEstado = this.EstadosService.getAllEstados();
     
   } 
   
@@ -267,11 +264,13 @@ export class OrderComponent implements OnInit {
     
   }
 
+  
+
   FillTipoDDL(SelTipoId) {
-    //this.TipoId = this.OrdersService.getState(SelCountryId.value);
     this.TipoId = SelTipoId.value;
-   /*  this.CountryId = SelTipoId.value;
-    this.allCity = this.CityId = null; */
+  }
+  FillEstadoDDL(SelEstadoId) {
+    this.EstadoId = SelEstadoId.value;
   }
 
   FillClientDDL(SelClientId) {
@@ -282,21 +281,11 @@ export class OrderComponent implements OnInit {
   }
   
 
-  FillCityDDL(SelStateId) {
-    //this.allCity = this.OrdersService.getCity(SelStateId.value);
-    this.StateId = SelStateId.value
-  }
-
-  GetSelectedCity(City) {
-    this.CityId = City.value;
-  }
-
+  
   resetForm() {
     this.orderForm.reset();
     this.massage = null;
     this.dataSaved = false;
-    this.isMale = true;
-    this.isFeMale = false;
     this.loadallOrders();
   }
 

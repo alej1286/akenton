@@ -3,5 +3,6 @@ export class Order {
   client: number;
   descr: string;
   tipo: number;
+  estado: number;
   pallets: number;
 }

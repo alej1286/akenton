@@ -43,6 +43,13 @@ export class DefaultComponent implements AfterViewInit, OnInit {
     this.sidenav.toggle();
   }
 
+  clickMenu(eventData){
+    if(this.sidenav.mode ==='over'){
+      this.sidenav.close();
+    }
+    
+  }
+
   ngOnInit() {
     this.screenWidth$.subscribe((width) => {
       this.screenWidth = width;

@@ -3,40 +3,40 @@
 <!-- <mat-sidenav #sidebar [mode]="mode ? 'side' : 'over'" [opened]="mode"> -->
 
 <div class="navbar">
-    <div class="top">
+    <!-- <div class="top">
         <mat-icon [inline]='true'>notifications_none</mat-icon>
     </div>
     <div class="user">
         <img src="https://icon-library.com/images/admin-user-icon/admin-user-icon-4.jpg" alt="">
         <h4 class="name">admin</h4>
         <p class="mail">admin@gmail.com</p>
-    </div>
+    </div> -->
     <div class="menu">
-        <div class="menu-head">
+        <!-- <div class="menu-head">
             <span>dashboard</span>
-        </div>
-        <div class="menu-item">
-            <button mat-button class="menu-button" [routerLink]="['/dashboard']">
+        </div> -->
+        <mat-nav-list class="menu-item">
+            <a mat-list-item (click)="buttonClicked()" class="menu-button" [routerLink]="['/dashboard']">
                 <mat-icon>dashboard</mat-icon>
                 <span>Home</span>
-            </button>
-            <button mat-button class="menu-button" [routerLink]="['/orders']">
-                <mat-icon>message</mat-icon>
-                <span>Orders</span>
-            </button>
-            <button mat-button class="menu-button" [routerLink]="['/clients']">
-                <mat-icon>comment</mat-icon>
-                <span>Clients</span>
-            </button>
-            <button mat-button class="menu-button" [routerLink]="['/tipos']">
-                <mat-icon>pages</mat-icon>
-                <span>Tipos</span>
-            </button>
+            </a>
+            <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/orders']">
+                <mat-icon>pending_actions</mat-icon>
+                <span>Ordenes</span>
+            </a>
+            <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/clients']">
+                <mat-icon>supervisor_account</mat-icon>
+                <span>Clientes</span>
+            </a>
+            <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/tipos']">
+                <mat-icon>shopping_bag</mat-icon>
+                <span>Tipo de Bolsas</span>
+            </a>
             <!-- <button mat-button class="menu-button">
                 <mat-icon>settings</mat-icon>
                 <span>Settings</span>
             </button> -->
-        </div>
+        </mat-nav-list>
     </div>
     
 </div>

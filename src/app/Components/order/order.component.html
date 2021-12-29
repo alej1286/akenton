@@ -2,17 +2,17 @@
   class="container"
   fxLayout="row wrap"
   fxLayoutAlign="center center"
-  fxFlex="98%"
+  fxFlex="100%"
   fxFlex.xs="100%"
   fxLayoutGap="10px"
 >
-  <mat-card class="mat-elevation-z8">
+  <mat-card class="mat-elevation-z8" fxFlex="98%">
     <mat-card-content>
       <form [formGroup]="orderForm" (ngSubmit)="onFormSubmit()">
         <div>
           <div
             fxLayout="row wrap"
-            fxFlex="70%"
+            fxFlex
             fxFlex.xs="100%"
             fxFlex.sm="100%"
             fxLayoutAlign="center center"
@@ -57,6 +57,26 @@
                 ></span>
               </mat-error>
             </div>
+
+            <div class="tbl1" fxFlex>
+              <mat-form-field fxFlex>
+                <mat-label>Estado</mat-label>
+                <mat-select
+                  (selectionChange)="FillEstadoDDL($event)"
+                  formControlName="estado"
+                  matTooltip="Select Estado"
+                  autocomplete="off"
+                >
+                  <mat-option
+                    *ngFor="let estado of allEstado | async"
+                    [value]="estado.id"
+                  >
+                    {{ estado.descr }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
             <div class="tbl1" fxFlex>
               <mat-form-field fxFlex>
                 <input
@@ -77,15 +97,7 @@
                 ></span>
               </mat-error>
             </div>
-            <!-- 
-              <td class="tbl1">
-                <mat-form-field class="demo-full-width">
-                  <input formControlName="tipo" matTooltip="Enter tipo" matInput placeholder="tipo ID" autocomplete="off">
-                </mat-form-field>
-                <mat-error>
-                  <span *ngIf="!orderForm.get('tipo').value && orderForm.get('tipo').touched"></span>
-                </mat-error>
-              </td> -->
+            
 
             <div class="tbl1" fxFlex>
               <mat-form-field fxFlex>
@@ -105,55 +117,13 @@
                 </mat-select>
               </mat-form-field>
             </div>
+
+
+
+
+
           </div>
-          <!-- <tr>
-              <td class="tbl1">
-                <mat-form-field>
-                  <mat-label>Country</mat-label>
-                  <mat-select (selectionChange)="FillStateDDL($event)" formControlName="Country" matTooltip="Select Country" autocomplete="off">
-                    <mat-option *ngFor="let Country of (allCountry | async)" [value]="Country.CountryId">
-                      {{Country.CountryName}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </td>
-              <td class="tbl1">
-                <mat-form-field>
-                  <mat-label>State</mat-label>
-                  <mat-select (selectionChange)="FillCityDDL($event)" formControlName="State" matTooltip="Select State" autocomplete="off">
-                    <mat-option *ngFor="let State of (allState | async)" [value]="State.StateId">
-                      {{State.StateName}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </td>
-              <td class="tbl1">
-                <mat-form-field>
-                  <mat-label>City</mat-label>
-                  <mat-select formControlName="City" (selectionChange)="GetSelectedCity($event)" matTooltip="Select City" autocomplete="off">
-                    <mat-option *ngFor="let City of (allCity | async)" [value]="City.Cityid">
-                      {{City.CityName}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </td>
-              <td class="tbl1">
-                <mat-form-field class="demo-full-width">
-                  <input matTooltip="Enter Address" formControlName="Address" matInput placeholder="Address" autocomplete="off">
-                </mat-form-field>
-                <mat-error>
-                  <span *ngIf="!orderForm.get('Address').value && orderForm.get('Address').touched"></span>
-                </mat-error>
-              </td>
-              <td class="tbl1">
-                <mat-form-field class="demo-full-width">
-                  <input formControlName="Pincode" matTooltip="Enter Pine Code" matInput placeholder="Pincode" minLength="5" maxLength="6" autocomplete="off">
-                </mat-form-field>
-                <mat-error>
-                  <span *ngIf="!orderForm.get('Pincode').value && orderForm.get('Pincode').touched"></span>
-                </mat-error>
-              </td>
-            </tr> -->
+          
         </div>
 
         <div>
@@ -273,6 +243,22 @@
                 <app-td-tipo-bolsa-translator
                   [tipoId]="order.tipo"
                 ></app-td-tipo-bolsa-translator>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+              <th
+                style="width: 25%"
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+              >
+                Estado de orden
+              </th>
+              <td mat-cell *matCellDef="let order">
+                <app-td-estado-translator
+                  [estadoId]="order.estado"
+                ></app-td-estado-translator>
               </td>
             </ng-container>
 

@@ -41,6 +41,11 @@ import { TiposService } from './Services/tipos.service';
 import { ClientsService } from './Services/clients.service';
 import { TipoComponent } from './Components/tipo/tipo.component';
 import { ClientComponent } from './Components/client/client.component';
+import {MatListModule} from '@angular/material/list';
+import { TdEstadoTranslatorComponent } from './Components/order/td-estado-translator/td-estado-translator.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
+
 
 const Ux_Modules = [
   MatButtonModule,
@@ -61,6 +66,8 @@ const Ux_Modules = [
   MatTableModule,
   MatPaginatorModule,
   MatDialogModule,
+  MatListModule,
+  MatProgressBarModule
 ];
 @NgModule({
   declarations: [
@@ -74,6 +81,7 @@ const Ux_Modules = [
     TdClientTranslatorComponent,
     TipoComponent,
     ClientComponent,
+    TdEstadoTranslatorComponent,
   ],
   imports: [
     BrowserModule,
