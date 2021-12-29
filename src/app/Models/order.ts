@@ -1,8 +1,7 @@
 export class Order {
-    id: number;
-    descr: string;
-    tipo: number;
-    pallets: number;
-  }
-
- 
+  id: number;
+  client: number;
+  descr: string;
+  tipo: number;
+  pallets: number;
+}

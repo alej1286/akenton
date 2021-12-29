@@ -1,27 +1,83 @@
-<div class="container">
-    <mat-card class="mat-elevation-z8">
-      
-      <mat-card-content>
-        <form [formGroup]="orderForm" (ngSubmit)="onFormSubmit()" >
-          <table flLayout="column" fxLayoutGap="7px" fxLayoutGap.xs="0px">
-            <tr fxLayout="row" fxLayout.xs="column" fxLayoutGap="7px" fxLayoutGap.sm="0px">
-              <td class="tbl1" fxFlex appearance="outline">
-                <mat-form-field class="demo-full-width">
-                  <input formControlName="descr" matTooltip="Enter Descr" matInput placeholder="descr" autocomplete="off">
-                </mat-form-field>
-                <mat-error>
-                  <span *ngIf="!orderForm.get('descr').value && orderForm.get('descr').touched"></span>
-                </mat-error>
-              </td>
-              <td class="tbl1" fxFlex appearance="outline">
-                <mat-form-field class="demo-full-width">
-                  <input formControlName="pallets" matTooltip="Enter Pallets" matInput placeholder="Pallets" autocomplete="off">
-                </mat-form-field>
-                <mat-error>
-                  <span *ngIf="!orderForm.get('pallets').value && orderForm.get('pallets').touched"></span>
-                </mat-error>
-              </td>
-              <!-- 
+<div
+  class="container"
+  fxLayout="row wrap"
+  fxLayoutAlign="center center"
+  fxFlex="98%"
+  fxFlex.xs="100%"
+  fxLayoutGap="10px"
+>
+  <mat-card class="mat-elevation-z8">
+    <mat-card-content>
+      <form [formGroup]="orderForm" (ngSubmit)="onFormSubmit()">
+        <div>
+          <div
+            fxLayout="row wrap"
+            fxFlex="70%"
+            fxFlex.xs="100%"
+            fxFlex.sm="100%"
+            fxLayoutAlign="center center"
+            fxLayoutGap="15px"
+          >
+            <div class="tbl1" fxFlex>
+              <mat-form-field fxFlex>
+                <mat-label>Cliente</mat-label>
+                <mat-select
+                  (selectionChange)="FillClientDDL($event)"
+                  formControlName="client"
+                  matTooltip="Select a client"
+                  autocomplete="off"
+                  fxFlex
+                >
+                  <mat-option
+                    *ngFor="let client of allClient | async"
+                    [value]="client.id"
+                  >
+                    {{ client.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="tbl1" fxFlex>
+              <mat-form-field fxFlex>
+                <input
+                  formControlName="descr"
+                  matTooltip="Enter Descr"
+                  matInput
+                  placeholder="descr"
+                  autocomplete="off"
+                />
+              </mat-form-field>
+              <mat-error>
+                <span
+                  *ngIf="
+                    !orderForm.get('descr').value &&
+                    orderForm.get('descr').touched
+                  "
+                ></span>
+              </mat-error>
+            </div>
+            <div class="tbl1" fxFlex>
+              <mat-form-field fxFlex>
+                <input
+                  fxFlex
+                  formControlName="pallets"
+                  matTooltip="Enter Pallets"
+                  matInput
+                  placeholder="Pallets"
+                  autocomplete="off"
+                />
+              </mat-form-field>
+              <mat-error>
+                <span
+                  *ngIf="
+                    !orderForm.get('pallets').value &&
+                    orderForm.get('pallets').touched
+                  "
+                ></span>
+              </mat-error>
+            </div>
+            <!-- 
               <td class="tbl1">
                 <mat-form-field class="demo-full-width">
                   <input formControlName="tipo" matTooltip="Enter tipo" matInput placeholder="tipo ID" autocomplete="off">
@@ -31,18 +87,26 @@
                 </mat-error>
               </td> -->
 
-              <td class="tbl1" fxFlex appearance="outline">
-                <mat-form-field>
-                  <mat-label>Tipo</mat-label>
-                  <mat-select (selectionChange)="FillStateDDL($event)" formControlName="tipo" matTooltip="Select Tipo" autocomplete="off">
-                    <mat-option *ngFor="let tipo of (allTipo | async)" [value]="tipo.id">
-                      {{tipo.descr}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </td>
-            </tr>
-            <!-- <tr>
+            <div class="tbl1" fxFlex>
+              <mat-form-field fxFlex>
+                <mat-label>Tipo</mat-label>
+                <mat-select
+                  (selectionChange)="FillTipoDDL($event)"
+                  formControlName="tipo"
+                  matTooltip="Select Tipo"
+                  autocomplete="off"
+                >
+                  <mat-option
+                    *ngFor="let tipo of allTipo | async"
+                    [value]="tipo.id"
+                  >
+                    {{ tipo.descr }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <tr>
               <td class="tbl1">
                 <mat-form-field>
                   <mat-label>Country</mat-label>
@@ -90,88 +154,198 @@
                 </mat-error>
               </td>
             </tr> -->
-            <tr>
-              <td class="content-center">
-                <button type="submit" mat-raised-button color="accent" matTooltip="Submit" [disabled]="!orderForm.valid">Submit</button>
-                <button type="reset" mat-raised-button color="accent" matTooltip="Reset" (click)="resetForm()">Reset</button>
-              </td>
-              <td>
-                <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">
-                  {{massage}}
-                </p>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-          </table>
-          <br><br>
-  
-          <mat-form-field>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
-          </mat-form-field>
-  
-          <button mat-icon-button aria-label="Example icon button with a delete icon" type="button" mat-raised-button color="accent" matTooltip="Delete" (click)="DeleteData()"><mat-icon>delete</mat-icon></button>
-  
-          <div>
-  
-            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);">
-  
-              <!-- Checkbox Column -->
-              <ng-container matColumnDef="select">
-                <th style="width: 25%;" mat-header-cell *matHeaderCellDef>
-                  <mat-checkbox (change)="$event ? masterToggle() : null"
-                                [checked]="selection.hasValue() && isAllSelected()"
-                                [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let row">
-                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)"></mat-checkbox>
-                </td>
-              </ng-container>
-  
-              <ng-container matColumnDef="descr">
-                <th style="width: 25%;" mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
-                <td mat-cell *matCellDef="let order"> {{order.descr}} </td>
-              </ng-container>
-  
-              <ng-container matColumnDef="tipo">
-                <th style="width: 25%;" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de Bolsa </th>
-               
-              <!-- <td mat-cell *matCellDef="let order"> 
-                  <mat-cell *ngIf="order.tipo === 1">1.5Lbs</mat-cell>
-                  <mat-cell *ngIf="order.tipo === 2">3Lbs</mat-cell>
-                  <mat-cell *ngIf="order.tipo === 3">5Lbs</mat-cell>
-              </td> -->
-              <td mat-cell *matCellDef="let order">
-                <app-td-tipo-bolsa-translator [tipoId]="order.tipo"></app-td-tipo-bolsa-translator>
-              </td>
-              </ng-container>
-              
-              <ng-container matColumnDef="pallets">
-                <th  style="width: 25%;" mat-header-cell *matHeaderCellDef mat-sort-header> No. pallets </th>
-                <td mat-cell *matCellDef="let order"> {{order.pallets}} </td>
-              </ng-container>
-  
-              <ng-container matColumnDef="edit">
-                <th style="width: 25%;" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-                <td mat-cell *matCellDef="let order">
-                  <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" type="button" mat-raised-button color="accent" matTooltip="Edit" (click)="loadOrderToEdit(order.id)"><mat-icon>edit</mat-icon></button>
-                </td>
-              </ng-container>
-  
-              <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-                <td mat-cell *matCellDef="let order"> <button mat-icon-button aria-label="Example icon button with a delete icon" type="button" mat-raised-button color="accent" matTooltip="Delete" (click)="deleteOrder(order.id)"><mat-icon>delete_forever</mat-icon></button></td>
-              </ng-container>
-  
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-  
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+        <div>
+          <div
+            fxLayout="row wrap"
+            fxFlex="70%"
+            fxFlex.xs="100%"
+            fxFlex.sm="100%"
+            fxLayoutAlign="center center"
+            fxLayoutGap="15px"
+          >
+            <button
+              type="submit"
+              mat-raised-button
+              color="accent"
+              matTooltip="Submit"
+              [disabled]="!orderForm.valid"
+            >
+              Submit
+            </button>
+            <button
+              type="reset"
+              mat-raised-button
+              color="accent"
+              matTooltip="Reset"
+              (click)="resetForm()"
+            >
+              Reset
+            </button>
           </div>
-  
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+          <div>
+            <p
+              *ngIf="dataSaved"
+              style="color: rgb(0, 128, 0); font-size: 20px; font-weight: bold"
+              Class="success"
+              align="left"
+            >
+              {{ massage }}
+            </p>
+          </div>
+        </div>
+        <br /><br />
+
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Filter" />
+        </mat-form-field>
+
+        <button
+          mat-icon-button
+          aria-label="Example icon button with a delete icon"
+          type="button"
+          mat-raised-button
+          color="accent"
+          matTooltip="Delete"
+          (click)="DeleteData()"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        <div>
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            matSort
+            class="mat-elevation-z8"
+            style="
+              box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+                0 6px 10px 0 rgba(0, 0, 0, 0.14),
+                0 1px 18px 0 rgba(0, 0, 0, 0.12);
+            "
+          >
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th style="width: 25%" mat-header-cell *matHeaderCellDef>
+                <mat-checkbox
+                  (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()"
+                ></mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox
+                  (click)="$event.stopPropagation()"
+                  (change)="$event ? selection.toggle(row) : null"
+                  [checked]="selection.isSelected(row)"
+                  [aria-label]="checkboxLabel(row)"
+                ></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="client">
+              <th
+                style="width: 25%"
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+              >
+                Cliente
+              </th>
+              <td mat-cell *matCellDef="let order">
+                <app-td-client-translator
+                  [clientId]="order.client"
+                ></app-td-client-translator>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipo">
+              <th
+                style="width: 25%"
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+              >
+                Tipo de Bolsa
+              </th>
+              <td mat-cell *matCellDef="let order">
+                <app-td-tipo-bolsa-translator
+                  [tipoId]="order.tipo"
+                ></app-td-tipo-bolsa-translator>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="pallets">
+              <th
+                style="width: 25%"
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+              >
+                No. pallets
+              </th>
+              <td mat-cell *matCellDef="let order">{{ order.pallets }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="descr">
+              <th
+                style="width: 25%"
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+              >
+                Descripcion
+              </th>
+              <td mat-cell *matCellDef="let order">{{ order.descr }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+              <th
+                style="width: 25%"
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+              ></th>
+              <td mat-cell *matCellDef="let order">
+                <button
+                  mat-icon-button
+                  aria-label="Example icon button with a vertical three dot icon"
+                  type="button"
+                  mat-raised-button
+                  color="accent"
+                  matTooltip="Edit"
+                  (click)="loadOrderToEdit(order.id)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+              <td mat-cell *matCellDef="let order">
+                <button
+                  mat-icon-button
+                  aria-label="Example icon button with a delete icon"
+                  type="button"
+                  mat-raised-button
+                  color="accent"
+                  matTooltip="Delete"
+                  (click)="deleteOrder(order.id)"
+                >
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

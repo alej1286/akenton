@@ -10,6 +10,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Tipo } from 'src/app/Models/tipo';
+import { Client } from 'src/app/Models/client';
+import { TiposService } from 'src/app/Services/tipos.service';
+import { ClientsService } from 'src/app/Services/clients.service';
 
 
 
@@ -46,13 +49,17 @@ export class OrderComponent implements OnInit {
   
   allCountry: Observable<Country[]>;
   allTipo: Observable<Tipo[]>;
+  allClient: Observable<Client[]>;
   tipos : Tipo[];
+
+  clients : Client[];
 
   allState: Observable<State[]>;
   allCity: Observable<City[]>;
   
   CountryId = null;
   TipoId = null;
+  ClientId = null;
   
   StateId = null;
   CityId = null;
@@ -61,11 +68,11 @@ export class OrderComponent implements OnInit {
   isFeMale = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  displayedColumns: string[] = ['select', 'descr', 'tipo', 'pallets', 'edit', 'delete'];
+  displayedColumns: string[] = ['select', 'client', 'tipo', 'pallets', 'descr', 'edit', 'delete'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private formbulider: FormBuilder, private OrdersService: OrdersService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
+  constructor(private formbulider: FormBuilder, private OrdersService: OrdersService, private _snackBar: MatSnackBar, public dialog: MatDialog, private TiposService: TiposService, private ClientsService: ClientsService) {
     this.OrdersService.getAllOrders().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       //console.log(this.dataSource); 
@@ -73,21 +80,35 @@ export class OrderComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
 
-    this.OrdersService.getAllTipos()
+
+    this.TiposService.getAllTipos()
     .subscribe(tipos => {
         this.tipos = tipos as Tipo[]
         //console.log(this.tipos);
     })
+  
+    
+    this.ClientsService.getAllClients()
+    .subscribe(clients => {
+        this.clients = clients as Client[]
+        //console.log(this.tipos);
+    })
+  
   }
+
+  
+  
 
   ngOnInit() {
     this.orderForm = this.formbulider.group({
-      descr: ['', [Validators.required]],
+      client: ['', [Validators.required]],
       tipo: ['', [Validators.required]],
-      pallets: ['', [Validators.required]]
+      pallets: ['', [Validators.required]],
+      descr: ['', [Validators.required]]
     });
     this.FillCountryDDL();
-    this.FillTipoDDL();
+    this.FillTiposDDL();
+    this.FillClientsDDL();
     this.loadallOrders();
     /* this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort; */
@@ -166,6 +187,7 @@ export class OrderComponent implements OnInit {
       this.massage = null;
       this.dataSaved = false;
       this.orderIdUpdate = order[0].id;
+      this.orderForm.controls['client'].setValue(order[0].client);
       this.orderForm.controls['descr'].setValue(order[0].descr);
       this.orderForm.controls['pallets'].setValue(order[0].pallets);
       this.orderForm.controls['tipo'].setValue(order[0].tipo);
@@ -182,7 +204,6 @@ export class OrderComponent implements OnInit {
 
   }
   CreateOrder(order: Order) {
-    //console.log(order);
     if (this.orderIdUpdate == null) {
       /* employee.CountryId = this.CountryId;
       employee.StateId = this.StateId;
@@ -203,6 +224,7 @@ export class OrderComponent implements OnInit {
       employee.StateId = this.StateId;
       employee.Cityid = this.CityId; */
       order.tipo = this.TipoId;
+      order.client = this.ClientId;
       //console.log(this.orderIdUpdate,order);
       this.OrdersService.updateOrder(this.orderIdUpdate,order).subscribe(() => {
         this.dataSaved = true;
@@ -233,18 +255,32 @@ export class OrderComponent implements OnInit {
     this.allState = this.StateId = this.allCity = this.CityId = null;
   }
 
-  FillTipoDDL(/* SelTipoID */) {
-    //this.TipoId = SelTipoID.value;
-    this.allTipo = this.OrdersService.getAllTipos();
+  FillTiposDDL(/* SelTipoID */) {
+    
+    this.allTipo = this.TiposService.getAllTipos();
+    
+  } 
+  
+  FillClientsDDL(/* SelTipoID */) {
+
+    this.allClient = this.ClientsService.getAllClients();
     
   }
 
-  FillStateDDL(SelCountryId) {
+  FillTipoDDL(SelTipoId) {
     //this.TipoId = this.OrdersService.getState(SelCountryId.value);
-    this.TipoId = SelCountryId.value;
-    this.CountryId = SelCountryId.value;
-    this.allCity = this.CityId = null;
+    this.TipoId = SelTipoId.value;
+   /*  this.CountryId = SelTipoId.value;
+    this.allCity = this.CityId = null; */
   }
+
+  FillClientDDL(SelClientId) {
+    //this.TipoId = this.OrdersService.getState(SelCountryId.value);
+    this.ClientId = SelClientId.value;
+   /*  this.CountryId = SelTipoId.value;
+    this.allCity = this.CityId = null; */
+  }
+  
 
   FillCityDDL(SelStateId) {
     //this.allCity = this.OrdersService.getCity(SelStateId.value);
