@@ -39,6 +39,8 @@ export class OrderComponent implements OnInit {
   allClient: Observable<Client[]>;
   tipos : Tipo[];
 
+  SelectedDate = null;
+
   clients : Client[];
 
   //allState: Observable<State[]>;
@@ -56,7 +58,7 @@ export class OrderComponent implements OnInit {
   //isFeMale = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  displayedColumns: string[] = ['select', 'client', 'tipo', 'pallets', 'estado','descr', 'edit', 'delete'];
+  displayedColumns: string[] = ['select', 'client', 'tipo', 'pallets', 'estado','recogida','descr', 'edit', 'delete'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   estados: Estado[];
@@ -97,6 +99,7 @@ export class OrderComponent implements OnInit {
       tipo: ['', [Validators.required]],
       pallets: ['', [Validators.required]],
       estado: ['', [Validators.required]],
+      recogida: ['', [Validators.required]],
       descr: ['', [Validators.required]]
     });
     this.FillTiposDDL();
@@ -185,6 +188,7 @@ export class OrderComponent implements OnInit {
       this.orderForm.controls['pallets'].setValue(order[0].pallets);
       this.orderForm.controls['tipo'].setValue(order[0].tipo);
       this.orderForm.controls['estado'].setValue(order[0].estado);
+      this.orderForm.controls['recogida'].setValue(order[0].recogida);
       /* this.allState = this.OrdersService.getState(employee.CountryId);
       this.CountryId = employee.CountryId;
       this.orderForm.controls['State'].setValue(employee.StateId);

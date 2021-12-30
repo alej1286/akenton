@@ -17,7 +17,7 @@
         </div> -->
         <mat-nav-list class="menu-item">
             <a mat-list-item (click)="buttonClicked()" class="menu-button" [routerLink]="['/dashboard']">
-                <mat-icon>dashboard</mat-icon>
+                <mat-icon>home</mat-icon>
                 <span>Home</span>
             </a>
             <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/orders']">
@@ -31,6 +31,11 @@
             <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/tipos']">
                 <mat-icon>shopping_bag</mat-icon>
                 <span>Tipo de Bolsas</span>
+            </a>
+
+            <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/estados']">
+                <mat-icon>shopping_bag</mat-icon>
+                <span>Estados</span>
             </a>
             <!-- <button mat-button class="menu-button">
                 <mat-icon>settings</mat-icon>

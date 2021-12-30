@@ -5,4 +5,5 @@ export class Order {
   tipo: number;
   estado: number;
   pallets: number;
+  recogida: Date;
 }

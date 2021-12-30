@@ -44,7 +44,7 @@ import { ClientComponent } from './Components/client/client.component';
 import {MatListModule} from '@angular/material/list';
 import { TdEstadoTranslatorComponent } from './Components/order/td-estado-translator/td-estado-translator.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-
+import { EstadoComponent } from './Components/estado/estado.component';
 
 
 const Ux_Modules = [
@@ -67,7 +67,7 @@ const Ux_Modules = [
   MatPaginatorModule,
   MatDialogModule,
   MatListModule,
-  MatProgressBarModule
+  MatProgressBarModule,
 ];
 @NgModule({
   declarations: [
@@ -82,6 +82,7 @@ const Ux_Modules = [
     TipoComponent,
     ClientComponent,
     TdEstadoTranslatorComponent,
+    EstadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +93,7 @@ const Ux_Modules = [
     ReactiveFormsModule,
     HttpClientModule,
     CdkTableModule,
-    FlexLayoutModule,
+    FlexLayoutModule
   ],
   providers: [OrdersService, TiposService, ClientsService],
   bootstrap: [AppComponent],
