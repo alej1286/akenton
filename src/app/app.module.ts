@@ -94,6 +94,7 @@ const Ux_Modules = [
     HttpClientModule,
     CdkTableModule,
     FlexLayoutModule
+    
   ],
   providers: [OrdersService, TiposService, ClientsService],
   bootstrap: [AppComponent],

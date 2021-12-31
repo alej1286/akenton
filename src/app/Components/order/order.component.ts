@@ -15,7 +15,7 @@ import { TiposService } from 'src/app/Services/tipos.service';
 import { ClientsService } from 'src/app/Services/clients.service';
 import { EstadosService } from 'src/app/Services/estados.service';
 import { Estado } from 'src/app/Models/estado';
-
+import ResponsiveTable from '@uidax/responsive-table'
 
 
 
@@ -26,6 +26,11 @@ import { Estado } from 'src/app/Models/estado';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
+
+  
+
+
+  
   dataSaved = false;
   orderForm: any;
   allOrders: Observable<Order[]>;
@@ -66,11 +71,13 @@ export class OrderComponent implements OnInit {
 
   constructor(private formbulider: FormBuilder, private OrdersService: OrdersService, private _snackBar: MatSnackBar, public dialog: MatDialog, private TiposService: TiposService, private ClientsService: ClientsService, private EstadosService: EstadosService) {
     this.OrdersService.getAllOrders().subscribe(data => {
+      console.log(data);
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
 
+    
 
     this.TiposService.getAllTipos()
     .subscribe(tipos => {
@@ -86,6 +93,22 @@ export class OrderComponent implements OnInit {
     this.EstadosService.getAllEstados()
     .subscribe(estados => {
         this.estados = estados as Estado[]
+    })
+
+
+    new ResponsiveTable({
+      // string, the table selector.
+      tableSelector: '.mat-elevation-z8',
+      // string, the max width for media query.
+      breakPoint: '480',
+      // string, the label font weight for mobile.
+      labelFontWeight: '900',
+      // string, the suffix for label.
+      labelSuffix: ':',
+      // string, the margin-right of label.
+      labelAfterSpace: '52',
+      // array of number, hidden labels base on INDEX of column.
+      hiddenLabels: [], 
     })
   
   }
@@ -178,7 +201,9 @@ export class OrderComponent implements OnInit {
   }
   loadOrderToEdit(orderId: string) {
     this.OrdersService.getOrderById(orderId).subscribe(order => {
-      //console.log(order[0]);
+      console.log("order[0]",order[0]);
+    
+      console.log("this.orderForm.controls",this.orderForm.controls);
     
       this.massage = null;
       this.dataSaved = false;
@@ -189,6 +214,9 @@ export class OrderComponent implements OnInit {
       this.orderForm.controls['tipo'].setValue(order[0].tipo);
       this.orderForm.controls['estado'].setValue(order[0].estado);
       this.orderForm.controls['recogida'].setValue(order[0].recogida);
+      console.log("this.orderForm.controls",this.orderForm.controls);
+    
+      
       /* this.allState = this.OrdersService.getState(employee.CountryId);
       this.CountryId = employee.CountryId;
       this.orderForm.controls['State'].setValue(employee.StateId);
@@ -226,6 +254,7 @@ export class OrderComponent implements OnInit {
       order.estado = this.EstadoId;
       //console.log(this.orderIdUpdate,order);
       this.OrdersService.updateOrder(this.orderIdUpdate,order).subscribe(() => {
+        console.log(order);
         this.dataSaved = true;
         this.SavedSuccessful(0);
         this.loadallOrders();

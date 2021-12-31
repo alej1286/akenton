@@ -97,7 +97,6 @@
                 ></span>
               </mat-error>
             </div>
-            
 
             <div class="tbl1" fxFlex>
               <mat-form-field fxFlex>
@@ -118,19 +117,30 @@
               </mat-form-field>
             </div>
 
-
-            <mat-form-field >
-              <input matInput [matDatepicker]="picker" matTooltip="Fecha recogida" formControlName="recogida" placeholder="recogida" autocomplete="off">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                matTooltip="Fecha recogida"
+                formControlName="recogida"
+                placeholder="recogida"
+                autocomplete="off"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-error>
-              <span *ngIf="!orderForm.get('recogida').value && orderForm.get('recogida').touched"></span>
+              <span
+                *ngIf="
+                  !orderForm.get('recogida').value &&
+                  orderForm.get('recogida').touched
+                "
+              ></span>
             </mat-error>
-
-
           </div>
-          
         </div>
 
         <div>
@@ -196,149 +206,170 @@
             [dataSource]="dataSource"
             matSort
             class="mat-elevation-z8"
-            style="
-              box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
-                0 6px 10px 0 rgba(0, 0, 0, 0.14),
-                0 1px 18px 0 rgba(0, 0, 0, 0.12);
-            "
           >
-            <!-- Checkbox Column -->
-            <ng-container matColumnDef="select">
-              <th style="width: 25%" mat-header-cell *matHeaderCellDef>
-                <mat-checkbox
-                  (change)="$event ? masterToggle() : null"
-                  [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()"
-                ></mat-checkbox>
-              </th>
-              <td mat-cell *matCellDef="let row">
-                <mat-checkbox
-                  (click)="$event.stopPropagation()"
-                  (change)="$event ? selection.toggle(row) : null"
-                  [checked]="selection.isSelected(row)"
-                  [aria-label]="checkboxLabel(row)"
-                ></mat-checkbox>
-              </td>
-            </ng-container>
+            <mat-card>
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <th style="width: 25%" mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox
+                    (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                  ></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox
+                    (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)"
+                  ></mat-checkbox>
+                </td>
+              </ng-container>
+            </mat-card>
 
-            <ng-container matColumnDef="client">
-              <th
-                style="width: 25%"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-              >
-                Cliente
-              </th>
-              <td mat-cell *matCellDef="let order">
-                <app-td-client-translator
-                  [clientId]="order.client"
-                ></app-td-client-translator>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="tipo">
-              <th
-                style="width: 25%"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-              >
-                Tipo de Bolsa
-              </th>
-              <td mat-cell *matCellDef="let order">
-                <app-td-tipo-bolsa-translator
-                  [tipoId]="order.tipo"
-                ></app-td-tipo-bolsa-translator>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="estado">
-              <th
-                style="width: 25%"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-              >
-                Estado de orden
-              </th>
-              <td mat-cell *matCellDef="let order">
-                <app-td-estado-translator
-                  [estadoId]="order.estado"
-                ></app-td-estado-translator>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="pallets">
-              <th
-                style="width: 25%"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-              >
-                No. pallets
-              </th>
-              <td mat-cell *matCellDef="let order">{{ order.pallets }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="descr">
-              <th
-                style="width: 25%"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-              >
-                Descripcion
-              </th>
-              <td mat-cell *matCellDef="let order">{{ order.descr }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="edit">
-              <th
-                style="width: 25%"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-              ></th>
-              <td mat-cell *matCellDef="let order">
-                <button
-                  mat-icon-button
-                  aria-label="Example icon button with a vertical three dot icon"
-                  type="button"
-                  mat-raised-button
-                  color="accent"
-                  matTooltip="Edit"
-                  (click)="loadOrderToEdit(order.id)"
+            <mat-card>
+              <ng-container matColumnDef="client">
+                <th
+                  style="width: 25%"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
                 >
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </td>
-            </ng-container>
+                  Cliente
+                </th>
+                <td mat-cell *matCellDef="let order">
+                  <app-td-client-translator
+                    [clientId]="order.client"
+                  ></app-td-client-translator>
+                </td>
+              </ng-container>
+            </mat-card>
 
-            <ng-container matColumnDef="delete">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-              <td mat-cell *matCellDef="let order">
-                <button
-                  mat-icon-button
-                  aria-label="Example icon button with a delete icon"
-                  type="button"
-                  mat-raised-button
-                  color="accent"
-                  matTooltip="Delete"
-                  (click)="deleteOrder(order.id)"
+            <mat-card>
+              <ng-container matColumnDef="tipo">
+                <th
+                  style="width: 25%"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
                 >
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
-            </ng-container>
+                  Tipo de Bolsa
+                </th>
+                <td mat-cell *matCellDef="let order">
+                  <app-td-tipo-bolsa-translator
+                    [tipoId]="order.tipo"
+                  ></app-td-tipo-bolsa-translator>
+                </td>
+              </ng-container>
+            </mat-card>
 
-            <ng-container matColumnDef="recogida">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> recogida </th>
-              <td mat-cell *matCellDef="let order"> {{order.recogida | date:'dd-MM-yyyy'}}</td>
-            </ng-container>
+            <mat-card>
+              <ng-container matColumnDef="estado">
+                <th
+                  style="width: 25%"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Estado de orden
+                </th>
+                <td mat-cell *matCellDef="let order">
+                  <app-td-estado-translator
+                    [estadoId]="order.estado"
+                  ></app-td-estado-translator>
+                </td>
+              </ng-container>
+            </mat-card>
+
+            <mat-card>
+              <ng-container matColumnDef="pallets">
+                <th
+                  style="width: 25%"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  No. pallets
+                </th>
+                <td mat-cell *matCellDef="let order">{{ order.pallets }}</td>
+              </ng-container>
+            </mat-card>
+
+            <mat-card>
+              <ng-container matColumnDef="descr">
+                <th
+                  style="width: 25%"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  Descripcion
+                </th>
+                <td mat-cell *matCellDef="let order">{{ order.descr }}</td>
+              </ng-container>
+            </mat-card>
+
+            <mat-card>
+              <ng-container matColumnDef="edit">
+                <th
+                  style="width: 25%"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                ></th>
+                <td mat-cell *matCellDef="let order">
+                  <button
+                    mat-icon-button
+                    aria-label="Example icon button with a vertical three dot icon"
+                    type="button"
+                    mat-raised-button
+                    color="accent"
+                    matTooltip="Edit"
+                    (click)="loadOrderToEdit(order.id)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+            </mat-card>
+
+            <mat-card>
+              <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let order">
+                  <button
+                    mat-icon-button
+                    aria-label="Example icon button with a delete icon"
+                    type="button"
+                    mat-raised-button
+                    color="accent"
+                    matTooltip="Delete"
+                    (click)="deleteOrder(order.id)"
+                  >
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+            </mat-card>
+
+            <mat-card>
+              <ng-container matColumnDef="recogida">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  recogida
+                </th>
+                <td mat-cell *matCellDef="let order">
+                  {{ order.recogida | date: "dd-MM-yyyy" }}
+                </td>
+              </ng-container>
+            </mat-card>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr
+              mat-row
+              [ngClass]="{ 'make-terminado': row.estado === 2, 'make-recogido': row.estado === 3 }"
+              *matRowDef="let row; columns: displayedColumns"
+            ></tr>
           </table>
 
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

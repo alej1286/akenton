@@ -17,6 +17,7 @@ export class TdEstadoTranslatorComponent implements OnInit {
     this.EstadosService.getAllEstados().subscribe((estados) => {
       estados.map((estado) => {
         if (this.estadoId === estado.id) {
+          //console.log(estado)
           this.estadoDescr = estado.descr;
         }
       });
