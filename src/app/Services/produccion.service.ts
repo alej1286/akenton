@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Order } from '../Models/order';
+import { Produccion } from '../Models/produccion';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class OrdersService {
+export class ProduccionsService {
   // Base url
   baseurl = 'https://akenton-server.herokuapp.com';
 
-  private orderUpdated = new Subject<Order[]>();
+  private produccionUpdated = new Subject<Produccion[]>();
 
   constructor(private http: HttpClient) {}
 
@@ -20,49 +20,47 @@ export class OrdersService {
   };
 
   // POST
-  CreateOrder(order: Order): Observable<Order> {
+  CreateProduccion(produccion: Produccion): Observable<Produccion> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    return this.http.post<Order>(this.baseurl + '/orders/', order, httpOptions);
+    return this.http.post<Produccion>(this.baseurl + '/produccion/', produccion, httpOptions);
   }
 
   getUpdateListener() {
-    return this.orderUpdated.asObservable();
+    return this.produccionUpdated.asObservable();
   }
 
   // GET
 
-  getAllOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.baseurl + '/orders');
+  getAllProduccions(): Observable<Produccion[]> {
+    return this.http.get<Produccion[]>(this.baseurl + '/produccion');
   }
 
-  updateOrder(id, data): Observable<Order> {
+  updateProduccion(id, data): Observable<Produccion> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
 
-    console.log(id);
-    console.log(data);
-    return this.http.put<Order>(
-      this.baseurl + '/orders/' + id,
+    return this.http.put<Produccion>(
+      this.baseurl + '/produccion/' + id,
       JSON.stringify(data),
       httpOptions
     );
   }
 
-  getOrderById(orderId: string): Observable<Order> {
-    return this.http.get<Order>(this.baseurl + '/orders/' + orderId);
+  getProduccionById(produccionId: string): Observable<Produccion> {
+    return this.http.get<Produccion>(this.baseurl + '/produccion/' + produccionId);
   }
 
-  deleteOrderById(order: any): Observable<string> {
+  deleteProduccionById(produccion: any): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
     return this.http.delete<string>(
-      this.baseurl + '/orders/' + order,
+      this.baseurl + '/produccion/' + produccion,
       httpOptions
     );
   }

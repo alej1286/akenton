@@ -45,6 +45,11 @@ import {MatListModule} from '@angular/material/list';
 import { TdEstadoTranslatorComponent } from './Components/order/td-estado-translator/td-estado-translator.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { EstadoComponent } from './Components/estado/estado.component';
+import { InventoryComponent } from './Components/inventory/inventory.component';
+import { InventoryService } from './Services/inventory.service';
+import { ProduccionComponent } from './Components/produccion/produccion.component';
+import { TdOrderTranslatorComponent } from './Components/produccion/td-order-translator/td-order-translator.component';
+import { ProduccionsService } from './Services/produccion.service';
 
 
 const Ux_Modules = [
@@ -83,6 +88,9 @@ const Ux_Modules = [
     ClientComponent,
     TdEstadoTranslatorComponent,
     EstadoComponent,
+    InventoryComponent,
+    ProduccionComponent,
+    TdOrderTranslatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +104,7 @@ const Ux_Modules = [
     FlexLayoutModule
     
   ],
-  providers: [OrdersService, TiposService, ClientsService],
+  providers: [OrdersService, TiposService, ClientsService,InventoryService,ProduccionsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

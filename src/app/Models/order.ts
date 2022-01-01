@@ -4,6 +4,7 @@ export class Order {
   descr: string;
   tipo: number;
   estado: number;
-  pallets: number;
+  cantidad: number;
   recogida: Date;
+  terminada: Date;
 }

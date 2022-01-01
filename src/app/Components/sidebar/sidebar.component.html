@@ -21,7 +21,7 @@
                 <span>Home</span>
             </a>
             <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/orders']">
-                <mat-icon>pending_actions</mat-icon>
+                <mat-icon>event</mat-icon>
                 <span>Ordenes</span>
             </a>
             <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/clients']">
@@ -34,8 +34,18 @@
             </a>
 
             <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/estados']">
-                <mat-icon>shopping_bag</mat-icon>
+                <mat-icon>cached</mat-icon>
                 <span>Estados</span>
+            </a>
+
+            <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/inventories']">
+                <mat-icon>pending_actions</mat-icon>
+                <span>inventories</span>
+            </a>
+
+            <a mat-list-item (click)="buttonClicked()"  class="menu-button" [routerLink]="['/produccion']">
+                <mat-icon>settings</mat-icon>
+                <span>Produccion</span>
             </a>
             <!-- <button mat-button class="menu-button">
                 <mat-icon>settings</mat-icon>
