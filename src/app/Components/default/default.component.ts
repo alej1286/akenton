@@ -43,11 +43,10 @@ export class DefaultComponent implements AfterViewInit, OnInit {
     this.sidenav.toggle();
   }
 
-  clickMenu(eventData){
-    if(this.sidenav.mode ==='over'){
+  clickMenu(eventData) {
+    if (this.sidenav.mode === 'over') {
       this.sidenav.close();
     }
-    
   }
 
   ngOnInit() {

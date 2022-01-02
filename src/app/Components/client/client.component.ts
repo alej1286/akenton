@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource, } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -13,7 +17,7 @@ import { ClientsService } from 'src/app/Services/clients.service';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
-  styleUrls: ['./client.component.scss']
+  styleUrls: ['./client.component.scss'],
 })
 export class ClientComponent implements OnInit {
   dataSaved = false;
@@ -23,30 +27,31 @@ export class ClientComponent implements OnInit {
   selection = new SelectionModel<Client>(true, []);
   clientIdUpdate = null;
   massage = null;
-  
-  
+
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   displayedColumns: string[] = ['select', 'nombre', 'edit', 'delete'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
-  constructor(private formbulider: FormBuilder, private ClientsService: ClientsService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
-    this.ClientsService.getAllClients().subscribe(data => {
+
+  constructor(
+    private formbulider: FormBuilder,
+    private ClientsService: ClientsService,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
+  ) {
+    this.ClientsService.getAllClients().subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    
   }
-
 
   ngOnInit() {
     this.clientForm = this.formbulider.group({
-      nombre: ['', [Validators.required]]
+      nombre: ['', [Validators.required]],
     });
   }
-
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -55,39 +60,44 @@ export class ClientComponent implements OnInit {
   }
 
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(r => this.selection.select(r));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((r) => this.selection.select(r));
   }
 
   checkboxLabel(row: Client): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.id + 1
+    }`;
   }
   DeleteData() {
     let numSelected = this.selection.selected;
     if (numSelected.length > 0) {
-      if (confirm("Are you sure to delete items ")) {
-        numSelected.map(client =>{
+      if (confirm('Are you sure to delete items ')) {
+        numSelected.map((client) => {
           debugger;
-    
-          this.ClientsService.deleteClientById(client.id).subscribe(result => {
-            console.log(result);
-            this.SavedSuccessful(2);
-            this.loadallClients();
-          });
+
+          this.ClientsService.deleteClientById(client.id).subscribe(
+            (result) => {
+              console.log(result);
+              this.SavedSuccessful(2);
+              this.loadallClients();
+            }
+          );
         });
       }
-  } else {
-    alert("Select at least one row");
+    } else {
+      alert('Select at least one row');
+    }
   }
-  }
-
 
   applyFilter(filterValue: Event) {
-
-    
-    this.dataSource.filter = (filterValue.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = (filterValue.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
@@ -95,7 +105,7 @@ export class ClientComponent implements OnInit {
   }
 
   loadallClients() {
-    this.ClientsService.getAllClients().subscribe(data => {
+    this.ClientsService.getAllClients().subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -108,9 +118,9 @@ export class ClientComponent implements OnInit {
     this.clientForm.reset();
   }
   loadClientToEdit(clientId: string) {
-    this.ClientsService.getClientById(clientId).subscribe(client => {
+    this.ClientsService.getClientById(clientId).subscribe((client) => {
       //console.log(client[0]);
-    
+
       this.massage = null;
       this.dataSaved = false;
       this.clientIdUpdate = client[0].id;
@@ -125,7 +135,6 @@ export class ClientComponent implements OnInit {
       this.isMale = employee.Gender.trim() == "0" ? true : false;
       this.isFeMale = employee.Gender.trim() == "1" ? true : false; */
     });
-
   }
   CreateClient(client: Client) {
     if (this.clientIdUpdate == null) {
@@ -133,48 +142,43 @@ export class ClientComponent implements OnInit {
       employee.StateId = this.StateId;
       employee.Cityid = this.CityId;
  */
-      this.ClientsService.CreateClient(client).subscribe(
-        () => {
-          this.dataSaved = true;
-          this.SavedSuccessful(1);
-          this.loadallClients();
-          this.clientIdUpdate = null;
-          this.clientForm.reset();
-        }
-      );
+      this.ClientsService.CreateClient(client).subscribe(() => {
+        this.dataSaved = true;
+        this.SavedSuccessful(1);
+        this.loadallClients();
+        this.clientIdUpdate = null;
+        this.clientForm.reset();
+      });
     } else {
       /* employee.EmpId = this.clientIdUpdate;
       employee.CountryId = this.CountryId;
       employee.StateId = this.StateId;
       employee.Cityid = this.CityId; */
       //console.log(this.clientIdUpdate,client);
-      this.ClientsService.updateClient(this.clientIdUpdate,client).subscribe(() => {
-        this.dataSaved = true;
-        this.SavedSuccessful(0);
-        this.loadallClients();
-        this.clientIdUpdate = null;
-        this.clientForm.reset();
-      });
+      this.ClientsService.updateClient(this.clientIdUpdate, client).subscribe(
+        () => {
+          this.dataSaved = true;
+          this.SavedSuccessful(0);
+          this.loadallClients();
+          this.clientIdUpdate = null;
+          this.clientForm.reset();
+        }
+      );
     }
   }
-  
+
   deleteClient(clientId: string) {
-    if (confirm("Are you sure you want to delete this ?")) {
+    if (confirm('Are you sure you want to delete this ?')) {
       this.ClientsService.deleteClientById(clientId).subscribe(() => {
         this.dataSaved = true;
         this.SavedSuccessful(2);
         this.loadallClients();
         this.clientIdUpdate = null;
         this.clientForm.reset();
-
       });
     }
-
   }
 
-
-  
-  
   resetForm() {
     this.clientForm.reset();
     this.massage = null;
@@ -189,15 +193,13 @@ export class ClientComponent implements OnInit {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });
-    }
-    else if (isUpdate == 1) {
+    } else if (isUpdate == 1) {
       this._snackBar.open('Record Saved Successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });
-    }
-    else if (isUpdate == 2) {
+    } else if (isUpdate == 2) {
       this._snackBar.open('Record Deleted Successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
@@ -205,7 +207,4 @@ export class ClientComponent implements OnInit {
       });
     }
   }
-
-
-
 }

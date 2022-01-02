@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ClientsService } from 'src/app/Services/clients.service';
 import { OrdersService } from 'src/app/Services/orders.service';
 import { TiposService } from 'src/app/Services/tipos.service';
@@ -16,13 +16,13 @@ export class TdOrderTranslatorComponent implements OnInit {
   tipoId: number;
   tipoNombre: string = '';
   
-  constructor(private OrderService: OrdersService, private ClientService: ClientsService, private TipoService: TiposService) {
+  constructor(private OrderService: OrdersService, private ClientService: ClientsService, private TipoService: TiposService,private ref: ChangeDetectorRef) {
     
   }
 
   ngOnInit(): void {
 
-    let orderIDstr = "";
+    /* let orderIDstr = "";
     orderIDstr = "" + this.orderId.toString();
     this.OrderService.getOrderById(orderIDstr).subscribe((order) => {
       this.clientId = order.client;
@@ -30,7 +30,7 @@ export class TdOrderTranslatorComponent implements OnInit {
       
       
       
-    });
+    }); */
 
     /* this.ClientService.getClientById(this.clientId.toString()).subscribe((client) => {
         this.clientNombre = client.nombre;
@@ -44,6 +44,7 @@ export class TdOrderTranslatorComponent implements OnInit {
       orders.map((order) => {
         if (this.orderId === order.id) {
           this.orderNombre = order.descr /* + "|" + this.clientNombre+'|'+this.tipoNombre */;
+          this.ref.detectChanges();
         }
       });
       //console.log(this.tipos);

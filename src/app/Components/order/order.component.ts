@@ -102,9 +102,9 @@ export class OrderComponent implements OnInit {
       // string, the suffix for label.
       labelSuffix: ':',
       // string, the margin-right of label.
-      labelAfterSpace: '112',
+      labelAfterSpace: '12',
       // array of number, hidden labels base on INDEX of column.
-      hiddenLabels: [1,2,3,4,5]
+      hiddenLabels: [1,2,3,4,5,6,7,8,9,10]
     });
 
   }
@@ -234,7 +234,7 @@ export class OrderComponent implements OnInit {
       employee.StateId = this.StateId;
       employee.Cityid = this.CityId;
       */
-
+      debugger;
       this.OrdersService.CreateOrder(order).subscribe(() => {
         this.dataSaved = true;
         this.SavedSuccessful(1);

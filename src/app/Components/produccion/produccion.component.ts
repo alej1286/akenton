@@ -90,9 +90,9 @@ export class ProduccionComponent implements OnInit {
       // string, the suffix for label.
       labelSuffix: ':',
       // string, the margin-right of label.
-      labelAfterSpace: '112',
+      labelAfterSpace: '12',
       // array of number, hidden labels base on INDEX of column.
-      hiddenLabels: []
+      hiddenLabels: [1,2,3,4,5,6,7,8,9,10]
     });
    }
 

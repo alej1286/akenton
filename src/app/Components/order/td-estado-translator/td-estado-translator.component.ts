@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { EstadosService } from 'src/app/Services/estados.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class TdEstadoTranslatorComponent implements OnInit {
   @Input() estadoId: number;
   estadoDescr: string = '';
 
-  constructor(private EstadosService: EstadosService) {}
+  constructor(private EstadosService: EstadosService,private ref: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     
@@ -19,6 +19,7 @@ export class TdEstadoTranslatorComponent implements OnInit {
         if (this.estadoId === estado.id) {
           //console.log(estado)
           this.estadoDescr = estado.descr;
+          this.ref.detectChanges();
         }
       });
       //console.log(this.estados);

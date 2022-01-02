@@ -16,7 +16,7 @@ import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { OrdersService } from './Services/orders.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -50,6 +50,9 @@ import { InventoryService } from './Services/inventory.service';
 import { ProduccionComponent } from './Components/produccion/produccion.component';
 import { TdOrderTranslatorComponent } from './Components/produccion/td-order-translator/td-order-translator.component';
 import { ProduccionsService } from './Services/produccion.service';
+import { LoadingInterceptor } from './classes/loading-interceptor';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 const Ux_Modules = [
@@ -73,6 +76,7 @@ const Ux_Modules = [
   MatDialogModule,
   MatListModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule
 ];
 @NgModule({
   declarations: [
@@ -90,7 +94,7 @@ const Ux_Modules = [
     EstadoComponent,
     InventoryComponent,
     ProduccionComponent,
-    TdOrderTranslatorComponent,
+    TdOrderTranslatorComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +108,8 @@ const Ux_Modules = [
     FlexLayoutModule
     
   ],
-  providers: [OrdersService, TiposService, ClientsService,InventoryService,ProduccionsService],
+  providers: [OrdersService, TiposService, ClientsService,InventoryService,ProduccionsService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

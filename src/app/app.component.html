@@ -1,3 +1,17 @@
-<app-default [deviceXs]="deviceXs"></app-default>
+
+
+
+
+
+
+<ng-container *ngIf="loadingService.isLoading$ | async" class="wrapper" >
+   <!--  <i class="loading"></i> -->
+    <mat-spinner style="margin:0 auto;" class="inner" 
+    mode="indeterminate"></mat-spinner>
+  </ng-container>
+
+
+
+  <app-default [deviceXs]="deviceXs"></app-default>
 
 <!-- <router-outlet></router-outlet> -->

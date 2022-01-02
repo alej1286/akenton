@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { TiposService } from 'src/app/Services/tipos.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class TDTipoBolsaTranslatorComponent implements OnInit {
   @Input() tipoId: number;
   tipoDescr: string = '';
 
-  constructor(private TiposService: TiposService) {}
+  constructor(private TiposService: TiposService,private ref: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     
@@ -18,6 +18,7 @@ export class TDTipoBolsaTranslatorComponent implements OnInit {
       tipos.map((tipo) => {
         if (this.tipoId === tipo.id) {
           this.tipoDescr = tipo.descr;
+          this.ref.detectChanges();
         }
       });
       //console.log(this.tipos);
