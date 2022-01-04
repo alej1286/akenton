@@ -19,6 +19,12 @@ import { OrdersService } from 'src/app/Services/orders.service';
 import ResponsiveTable from '@uidax/responsive-table';
 import { ProduccionsService } from 'src/app/Services/produccion.service';
 
+/* https://danielykpan.github.io/date-time-picker/ 
+
+https://daniel-projects.firebaseapp.com/owlng/date-time-picker
+*/
+
+
 @Component({
   selector: 'app-produccion',
   templateUrl: './produccion.component.html',
@@ -55,7 +61,14 @@ export class ProduccionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
+  cTime = new Date();
+  inicioDate = new Date(this.cTime.getFullYear(), this.cTime.getMonth(), this.cTime.getDay(), 7, 0, 0, 0);
 
+
+
+
+
+  
   constructor(
     private formbulider: FormBuilder,
     private ProduccionService: ProduccionsService,

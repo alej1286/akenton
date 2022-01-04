@@ -105,7 +105,28 @@
             </div>
 
 
-            <div class="tbl1" fxFlex>
+
+             <div class="tbl1" fxFlex>
+                <mat-form-field>
+                    <input 
+                    [owlDateTime]="pickerinicio" 
+                    [owlDateTimeTrigger]="pickerinicio"
+                    placeholder="fecha inicio"
+                    autocomplete="off" 
+                    formControlName="inicio" 
+                    matInput>
+                   <owl-date-time #pickerinicio [startAt]="inicioDate"></owl-date-time>
+                </mat-form-field>
+                <mat-error>
+                    <span
+                      *ngIf="
+                        !produccionForm.get('inicio').value &&
+                        produccionForm.get('inicio').touched
+                      "
+                    ></span>
+                  </mat-error>
+                </div>
+           <!--  <div class="tbl1" fxFlex>
                 <mat-form-field>
                   <input
                     matInput
@@ -129,9 +150,31 @@
                     "
                   ></span>
                 </mat-error>
-                </div>
+                </div> -->
 
-            <div class="tbl1" fxFlex>
+
+                <div class="tbl1" fxFlex>
+                    <mat-form-field>
+                        <input 
+                        [owlDateTime]="pickerfin" 
+                        [owlDateTimeTrigger]="pickerfin"
+                        placeholder="fecha fin"
+                        autocomplete="off" 
+                        formControlName="fin" 
+                        matInput>
+                       <owl-date-time #pickerfin></owl-date-time>
+                    </mat-form-field>
+                    <mat-error>
+                        <span
+                          *ngIf="
+                            !produccionForm.get('fin').value &&
+                            produccionForm.get('fin').touched
+                          "
+                        ></span>
+                      </mat-error>
+                    </div>
+
+            <!-- <div class="tbl1" fxFlex>
             <mat-form-field>
               <input
                 matInput
@@ -155,7 +198,7 @@
                 "
               ></span>
             </mat-error>
-            </div>
+            </div> -->
 
           </div>
         </div>

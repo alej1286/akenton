@@ -20,8 +20,13 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
+
+//import { MatDatepickerModule } from '@matheo/datepicker';
+//import { MatNativeDateModule } from '@matheo/datepicker/core';
+
+import { MatMenuModule } from '@angular/material/menu';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
@@ -52,6 +57,7 @@ import { TdOrderTranslatorComponent } from './Components/produccion/td-order-tra
 import { ProduccionsService } from './Services/produccion.service';
 import { LoadingInterceptor } from './classes/loading-interceptor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 
@@ -76,9 +82,11 @@ const Ux_Modules = [
   MatDialogModule,
   MatListModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+
 ];
 @NgModule({
+  
   declarations: [
     AppComponent,
     DefaultComponent,
@@ -94,7 +102,13 @@ const Ux_Modules = [
     EstadoComponent,
     InventoryComponent,
     ProduccionComponent,
-    TdOrderTranslatorComponent
+    TdOrderTranslatorComponent,
+
+
+
+    
+
+
   ],
   imports: [
     BrowserModule,
@@ -105,9 +119,11 @@ const Ux_Modules = [
     ReactiveFormsModule,
     HttpClientModule,
     CdkTableModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    OwlDateTimeModule, OwlNativeDateTimeModule,
     
   ],
+  
   providers: [OrdersService, TiposService, ClientsService,InventoryService,ProduccionsService,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
   bootstrap: [AppComponent],
