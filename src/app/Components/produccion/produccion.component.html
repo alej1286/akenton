@@ -33,10 +33,11 @@
                     [value]="order.id"
                   >
                     <app-td-client-translator [clientId]="order.client">
-                    </app-td-client-translator>  
-                     | <app-td-tipo-bolsa-translator [tipoId]="order.tipo">
+                    </app-td-client-translator>
+                    |
+                    <app-td-tipo-bolsa-translator [tipoId]="order.tipo">
                     </app-td-tipo-bolsa-translator>
-                     | {{ order.descr }}
+                    | {{ order.descr }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -61,8 +62,6 @@
                 ></span>
               </mat-error>
             </div>
-
-           
 
             <div class="tbl1" fxFlex>
               <mat-form-field fxFlex>
@@ -104,29 +103,31 @@
               </mat-form-field>
             </div>
 
-
-
-             <div class="tbl1" fxFlex>
-                <mat-form-field>
-                    <input 
-                    [owlDateTime]="pickerinicio" 
-                    [owlDateTimeTrigger]="pickerinicio"
-                    placeholder="fecha inicio"
-                    autocomplete="off" 
-                    formControlName="inicio" 
-                    matInput>
-                   <owl-date-time #pickerinicio [startAt]="inicioDate"></owl-date-time>
-                </mat-form-field>
-                <mat-error>
-                    <span
-                      *ngIf="
-                        !produccionForm.get('inicio').value &&
-                        produccionForm.get('inicio').touched
-                      "
-                    ></span>
-                  </mat-error>
-                </div>
-           <!--  <div class="tbl1" fxFlex>
+            <div class="tbl1" fxFlex>
+              <mat-form-field>
+                <input
+                  [owlDateTime]="pickerinicio"
+                  [owlDateTimeTrigger]="pickerinicio"
+                  placeholder="fecha inicio"
+                  autocomplete="disabled"
+                  formControlName="inicio"
+                  matInput
+                />
+                <owl-date-time
+                  #pickerinicio
+                  [startAt]="inicioDate"
+                ></owl-date-time>
+              </mat-form-field>
+              <mat-error>
+                <span
+                  *ngIf="
+                    !produccionForm.get('inicio').value &&
+                    produccionForm.get('inicio').touched
+                  "
+                ></span>
+              </mat-error>
+            </div>
+            <!--  <div class="tbl1" fxFlex>
                 <mat-form-field>
                   <input
                     matInput
@@ -152,27 +153,27 @@
                 </mat-error>
                 </div> -->
 
-
-                <div class="tbl1" fxFlex>
-                    <mat-form-field>
-                        <input 
-                        [owlDateTime]="pickerfin" 
-                        [owlDateTimeTrigger]="pickerfin"
-                        placeholder="fecha fin"
-                        autocomplete="off" 
-                        formControlName="fin" 
-                        matInput>
-                       <owl-date-time #pickerfin></owl-date-time>
-                    </mat-form-field>
-                    <mat-error>
-                        <span
-                          *ngIf="
-                            !produccionForm.get('fin').value &&
-                            produccionForm.get('fin').touched
-                          "
-                        ></span>
-                      </mat-error>
-                    </div>
+            <div class="tbl1" fxFlex>
+              <mat-form-field>
+                <input
+                  [owlDateTime]="pickerfin"
+                  [owlDateTimeTrigger]="pickerfin"
+                  placeholder="fecha fin"
+                  autocomplete="disabled"
+                  formControlName="fin"
+                  matInput
+                />
+                <owl-date-time #pickerfin></owl-date-time>
+              </mat-form-field>
+              <mat-error>
+                <span
+                  *ngIf="
+                    !produccionForm.get('fin').value &&
+                    produccionForm.get('fin').touched
+                  "
+                ></span>
+              </mat-error>
+            </div>
 
             <!-- <div class="tbl1" fxFlex>
             <mat-form-field>
@@ -199,7 +200,6 @@
               ></span>
             </mat-error>
             </div> -->
-
           </div>
         </div>
 
@@ -317,7 +317,6 @@
               </td>
             </ng-container>
 
-            
             <ng-container matColumnDef="cantidad">
               <th
                 style="width: 25%"
@@ -327,7 +326,9 @@
               >
                 No. cantidad
               </th>
-              <td mat-cell *matCellDef="let produccion">{{ produccion.cantidad }}</td>
+              <td mat-cell *matCellDef="let produccion">
+                {{ produccion.cantidad }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="descr">
@@ -339,7 +340,9 @@
               >
                 Descripcion
               </th>
-              <td mat-cell *matCellDef="let produccion">{{ produccion.descr }}</td>
+              <td mat-cell *matCellDef="let produccion">
+                {{ produccion.descr }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="edit">
@@ -382,18 +385,14 @@
             </ng-container>
 
             <ng-container matColumnDef="inicio">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  inicio
-                </th>
-                <td mat-cell *matCellDef="let produccion">
-                  {{ produccion.inicio | date: "dd-MM-yyyy" }}
-                </td>
-              </ng-container>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>inicio</th>
+              <td mat-cell *matCellDef="let produccion">
+                {{ produccion.inicio | date: "dd-MM-yyyy" }}
+              </td>
+            </ng-container>
 
             <ng-container matColumnDef="fin">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                fin
-              </th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>fin</th>
               <td mat-cell *matCellDef="let produccion">
                 {{ produccion.fin | date: "dd-MM-yyyy" }}
               </td>
