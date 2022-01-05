@@ -230,6 +230,11 @@
             >
               Reset
             </button>
+            
+            <button mat-stroked-button (click)="setCurrentBigbag();$event.preventDefault();" color="warn" aria-label="Example icon button with a plus one icon">
+              <mat-icon>arrow_upward</mat-icon>
+              BigBag: "{{currentBigbag}}"
+            </button>
           </div>
           <div>
             <p

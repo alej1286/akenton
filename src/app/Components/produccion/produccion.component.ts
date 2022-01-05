@@ -49,7 +49,7 @@ export class ProduccionComponent implements OnInit {
 
   TipoId = null;
   OrderId = null;
-  
+  currentBigbag = null;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   displayedColumns: string[] = [
@@ -107,6 +107,13 @@ export class ProduccionComponent implements OnInit {
       // array of number, hidden labels base on INDEX of column.
       hiddenLabels: [1,2,3,4,5,6,7,8,9,10]
     });
+
+    if (!localStorage.getItem('currentBigbag')) {
+      localStorage.setItem('currentBigbag','1');
+    } else {
+      this.currentBigbag = localStorage.getItem('currentBigbag');
+    }
+    //localStorage.setItem('prueba','prueba123');
    }
 
   ngOnInit(): void {
@@ -166,7 +173,13 @@ export class ProduccionComponent implements OnInit {
       alert('Select at least one row');
     }
   }
-
+  setCurrentBigbag(){
+    let a = 0;
+    a = parseInt(localStorage.getItem('currentBigbag'));
+    a = a + 1;
+    localStorage.setItem('currentBigbag',a.toString());
+    this.currentBigbag = a; 
+  }
   /* applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -194,13 +207,16 @@ export class ProduccionComponent implements OnInit {
   }
 
   onFormSubmit() {
+   // debugger;
     this.dataSaved = false;
     let produccion = this.produccionForm.value;
+    produccion.bigbag = localStorage.getItem('currentBigbag');
     this.CreateProduccion(produccion);
     this.produccionForm.reset();
   }
 
   loadProduccionToEdit(produccionId: string) {
+    console.log(localStorage.getItem('prueba'));
     this.ProduccionService.getProduccionById(produccionId).subscribe((produccion) => {
       
       this.massage = null;
@@ -244,6 +260,7 @@ export class ProduccionComponent implements OnInit {
         this.loadallProduccions();
         this.produccionIdUpdate = null;
         this.produccionForm.reset();
+        //Aqui va crear los datos de bigbag
       });
     } else {
       /* employee.EmpId = this.produccionIdUpdate;

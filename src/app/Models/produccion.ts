@@ -6,4 +6,5 @@ export class Produccion {
   inicio: Date;
   fin: Date;
   descr: string;
+  bigbag: number;
 }
