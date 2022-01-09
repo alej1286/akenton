@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { AuthService } from '@auth0/auth0-angular';
 import { Subscription } from 'rxjs';
 import { LoadingService } from './Services/loading.service';
 
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   mediaSub: Subscription;
   deviceXs: boolean;
 
-  constructor(public mediaObserver: MediaObserver,public loadingService: LoadingService) {}
+  constructor(public mediaObserver: MediaObserver,public loadingService: LoadingService, public auth: AuthService) {}
 
   ngOnInit(): void {
     //console.log("execution on each action");

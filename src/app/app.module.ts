@@ -58,8 +58,11 @@ import { ProduccionsService } from './Services/produccion.service';
 import { LoadingInterceptor } from './classes/loading-interceptor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-
-
+import { AuthModule } from "@auth0/auth0-angular";
+import { environment as env } from "../environments/environment";
+import { AuthButtonComponent } from './Components/auth/auth-button/auth-button.component';
+import { UserProfileComponent } from './Components/auth/user-profile/user-profile.component';
+import { PublicComponent } from './Components/public/public.component';
 
 const Ux_Modules = [
   MatButtonModule,
@@ -103,6 +106,9 @@ const Ux_Modules = [
     InventoryComponent,
     ProduccionComponent,
     TdOrderTranslatorComponent,
+    AuthButtonComponent,
+    UserProfileComponent,
+    PublicComponent,
 
 
 
@@ -121,7 +127,12 @@ const Ux_Modules = [
     CdkTableModule,
     FlexLayoutModule,
     OwlDateTimeModule, OwlNativeDateTimeModule,
-    
+    AuthModule.forRoot({
+      domain: 'dev-8-afhfgl.us.auth0.com',
+      clientId: 'tjZ8tpcvWvTOlzMLjs0paB4XaUxrPils',
+      cacheLocation:'localstorage',
+      useRefreshTokens: true
+    }),
   ],
   
   providers: [OrdersService, TiposService, ClientsService,InventoryService,ProduccionsService,
