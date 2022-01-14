@@ -18,6 +18,8 @@ import { TiposService } from 'src/app/Services/tipos.service';
 import { OrdersService } from 'src/app/Services/orders.service';
 import ResponsiveTable from '@uidax/responsive-table';
 import { ProduccionsService } from 'src/app/Services/produccion.service';
+import { InventoryService } from 'src/app/Services/inventory.service';
+import { BigbagService } from 'src/app/Services/bigbag.service';
 
 /* https://danielykpan.github.io/date-time-picker/ 
 
@@ -75,7 +77,8 @@ export class ProduccionComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     private TiposService: TiposService,
-    private OrdersService: OrdersService
+    private OrdersService: OrdersService,
+    private BigbagService: BigbagService
   ) {
 
     this.ProduccionService.getAllProduccions().subscribe((data) => {
@@ -179,6 +182,11 @@ export class ProduccionComponent implements OnInit {
     a = a + 1;
     localStorage.setItem('currentBigbag',a.toString());
     this.currentBigbag = a; 
+
+    this.BigbagService.decreaseBigbag().subscribe((res) => {
+      console.log(res);
+    });
+
   }
   /* applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
