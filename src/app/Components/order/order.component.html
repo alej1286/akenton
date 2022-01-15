@@ -206,10 +206,11 @@
             [dataSource]="dataSource"
             matSort
             class="mat-elevation-z8"
+            matSortActive="id" matSortDirection="desc" matSortDisableClear
           >
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
-              <th style="width: 10%" mat-header-cell *matHeaderCellDef>
+              <th style="width: 10%" mat-header-cell *matHeaderCellDef mat-sort-header>
                 <mat-checkbox
                   (change)="$event ? masterToggle() : null"
                   [checked]="selection.hasValue() && isAllSelected()"

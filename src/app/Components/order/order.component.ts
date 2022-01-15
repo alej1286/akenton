@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { OrdersService } from '../../Services/orders.service';
@@ -26,7 +26,7 @@ import ResponsiveTable from '@uidax/responsive-table';
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss'],
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit  {
   dataSaved = false;
   orderForm: any;
   allOrders: Observable<Order[]>;
@@ -108,7 +108,7 @@ export class OrderComponent implements OnInit {
     });
 
   }
-
+  
   ngOnInit() {
     this.orderForm = this.formbulider.group({
       client: ['', [Validators.required]],
@@ -123,6 +123,8 @@ export class OrderComponent implements OnInit {
     this.loadallOrders();
     this.FillEstadosDDL();
 
+
+    
     /* this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort; */
   }

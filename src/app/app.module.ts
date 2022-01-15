@@ -63,6 +63,7 @@ import { environment as env } from "../environments/environment";
 import { AuthButtonComponent } from './Components/auth/auth-button/auth-button.component';
 import { UserProfileComponent } from './Components/auth/user-profile/user-profile.component';
 import { PublicComponent } from './Components/public/public.component';
+import {MatSortModule} from '@angular/material/sort';
 
 const Ux_Modules = [
   MatButtonModule,
@@ -86,6 +87,7 @@ const Ux_Modules = [
   MatListModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
+  MatSortModule
 
 ];
 @NgModule({
