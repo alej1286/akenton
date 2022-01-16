@@ -64,6 +64,8 @@ import { AuthButtonComponent } from './Components/auth/auth-button/auth-button.c
 import { UserProfileComponent } from './Components/auth/user-profile/user-profile.component';
 import { PublicComponent } from './Components/public/public.component';
 import {MatSortModule} from '@angular/material/sort';
+import { ProductBarChartsComponent } from './Components/product-bar-charts/product-bar-charts.component';
+import { NgChartsModule } from 'ng2-charts';
 
 const Ux_Modules = [
   MatButtonModule,
@@ -111,6 +113,7 @@ const Ux_Modules = [
     AuthButtonComponent,
     UserProfileComponent,
     PublicComponent,
+    ProductBarChartsComponent,
 
 
 
@@ -129,6 +132,8 @@ const Ux_Modules = [
     CdkTableModule,
     FlexLayoutModule,
     OwlDateTimeModule, OwlNativeDateTimeModule,
+    NgChartsModule,
+    
     AuthModule.forRoot({
       domain: 'dev-8-afhfgl.us.auth0.com',
       clientId: 'tjZ8tpcvWvTOlzMLjs0paB4XaUxrPils',
