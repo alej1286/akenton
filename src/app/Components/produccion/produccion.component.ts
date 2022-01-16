@@ -52,6 +52,7 @@ export class ProduccionComponent implements OnInit {
   TipoId = null;
   OrderId = null;
   currentBigbag = null;
+  currentBigbagID = null;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   displayedColumns: string[] = [
@@ -65,7 +66,7 @@ export class ProduccionComponent implements OnInit {
   
   cTime = new Date();
   inicioDate = new Date(this.cTime.getFullYear(), this.cTime.getMonth(), this.cTime.getDay(), 7, 0, 0, 0);
-
+  //fs = require('file-system');
 
 
 
@@ -111,12 +112,18 @@ export class ProduccionComponent implements OnInit {
       hiddenLabels: [1,2,3,4,5,6,7,8,9,10]
     });
 
-    if (!localStorage.getItem('currentBigbag')) {
+    /* if (!localStorage.getItem('currentBigbag')) {
       localStorage.setItem('currentBigbag','1');
     } else {
       this.currentBigbag = localStorage.getItem('currentBigbag');
-    }
-    //localStorage.setItem('prueba','prueba123');
+    } */
+    this.BigbagService.getBigbagInStock().subscribe((res) => {
+      this.currentBigbag = res[0].in_stock; 
+    });
+
+
+
+
    }
 
   ngOnInit(): void {
@@ -177,16 +184,23 @@ export class ProduccionComponent implements OnInit {
     }
   }
   setCurrentBigbag(){
-    let a = 0;
+    /* let a = 0;
     a = parseInt(localStorage.getItem('currentBigbag'));
     a = a + 1;
     localStorage.setItem('currentBigbag',a.toString());
     this.currentBigbag = a; 
-
+ */
     this.BigbagService.decreaseBigbag().subscribe((res) => {
-      console.log(res);
+      //console.log(res);
+      this.currentBigbagID = res[0].val;
+      console.log(this.currentBigbagID);
+      
+      this.BigbagService.getBigbagInStock().subscribe((res) => {
+        this.currentBigbag = res[0].in_stock; 
+      });
+    
     });
-
+    
   }
   /* applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -218,7 +232,8 @@ export class ProduccionComponent implements OnInit {
    // debugger;
     this.dataSaved = false;
     let produccion = this.produccionForm.value;
-    produccion.bigbag = localStorage.getItem('currentBigbag');
+    //produccion.bigbag = localStorage.getItem('currentBigbag');
+    produccion.bigbag = this.currentBigbagID;
     this.CreateProduccion(produccion);
     this.produccionForm.reset();
   }

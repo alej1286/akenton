@@ -12,4 +12,8 @@ export class BigbagService {
   decreaseBigbag(): Observable<void> {
     return this.http.get<void>(this.baseurl + '/decreasebigbag');
   }
+
+  getBigbagInStock(): Observable<void> {
+    return this.http.get<void>(this.baseurl + '/getbigbaginstock');
+  }
 }
