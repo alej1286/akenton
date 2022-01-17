@@ -66,6 +66,7 @@ import { PublicComponent } from './Components/public/public.component';
 import {MatSortModule} from '@angular/material/sort';
 import { ProductBarChartsComponent } from './Components/product-bar-charts/product-bar-charts.component';
 import { NgChartsModule } from 'ng2-charts';
+import { BarComponent } from './Components/bar/bar.component';
 
 const Ux_Modules = [
   MatButtonModule,
@@ -114,6 +115,7 @@ const Ux_Modules = [
     UserProfileComponent,
     PublicComponent,
     ProductBarChartsComponent,
+    BarComponent,
 
 
 
