@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Produccion } from '../../Models/produccion';
@@ -79,7 +79,8 @@ export class ProduccionComponent implements OnInit {
     public dialog: MatDialog,
     private TiposService: TiposService,
     private OrdersService: OrdersService,
-    private BigbagService: BigbagService
+    private BigbagService: BigbagService,
+    private ref: ChangeDetectorRef
   ) {
 
     this.ProduccionService.getAllProduccions().subscribe((data) => {
@@ -196,7 +197,8 @@ export class ProduccionComponent implements OnInit {
       console.log(this.currentBigbagID);
       
       this.BigbagService.getBigbagInStock().subscribe((res) => {
-        this.currentBigbag = res[0].in_stock; 
+        this.currentBigbag = res[0].in_stock;
+        this.ref.detectChanges();
       });
     
     });
@@ -234,6 +236,7 @@ export class ProduccionComponent implements OnInit {
     let produccion = this.produccionForm.value;
     //produccion.bigbag = localStorage.getItem('currentBigbag');
     produccion.bigbag = this.currentBigbagID;
+    console.log('produccion.bigbag = this.currentBigbagID;',produccion.bigbag);
     this.CreateProduccion(produccion);
     this.produccionForm.reset();
   }
