@@ -272,7 +272,7 @@ export class ProduccionComponent implements OnInit {
     });
   }
   CreateProduccion(produccion: Produccion) {
-    //debugger;
+    debugger;
   
     if (this.produccionIdUpdate == null) {
       /* employee.CountryId = this.CountryId;
