@@ -51,8 +51,8 @@ export class ProduccionComponent implements OnInit {
 
   TipoId = null;
   OrderId = null;
-  currentBigbag = null;
-  currentBigbagID = null;
+  currentBigbag = 0;
+  currentBigbagID = 0;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   displayedColumns: string[] = [
@@ -119,7 +119,8 @@ export class ProduccionComponent implements OnInit {
       this.currentBigbag = localStorage.getItem('currentBigbag');
     } */
     this.BigbagService.getBigbagInStock().subscribe((res) => {
-      this.currentBigbag = res[0].in_stock; 
+      this.currentBigbag = res[0].in_stock;
+      console.log('this.currentBigbag = res[0].in_stock;',res[0].in_stock); 
     });
 
 
