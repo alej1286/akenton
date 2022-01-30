@@ -231,12 +231,16 @@ export class ProduccionComponent implements OnInit {
   }
 
   onFormSubmit() {
-   // debugger;
+    debugger;
     this.dataSaved = false;
     let produccion = this.produccionForm.value;
     //produccion.bigbag = localStorage.getItem('currentBigbag');
     produccion.bigbag = this.currentBigbagID;
-    console.log('produccion.bigbag = this.currentBigbagID;',produccion.bigbag);
+
+    console.log('this.currentBigbagID;',this.currentBigbagID);
+    console.log('produccion.bigbag',produccion.bigbag);
+    console.log(produccion);
+    
     this.CreateProduccion(produccion);
     this.produccionForm.reset();
   }
@@ -272,7 +276,7 @@ export class ProduccionComponent implements OnInit {
     });
   }
   CreateProduccion(produccion: Produccion) {
-    debugger;
+    //debugger;
   
     if (this.produccionIdUpdate == null) {
       /* employee.CountryId = this.CountryId;
