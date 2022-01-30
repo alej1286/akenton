@@ -123,6 +123,11 @@ export class ProduccionComponent implements OnInit {
       console.log('this.currentBigbag = res[0].in_stock;',res[0].in_stock); 
     });
 
+    this.BigbagService.getBigbagCounted().subscribe((res) => {
+      this.currentBigbagID = res[0].val;
+      console.log('this.currentBigbagID = res[0].val;',res[0].val); 
+    });
+
 
 
 
