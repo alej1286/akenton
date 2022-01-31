@@ -73,12 +73,11 @@ export class ProductBarChartsComponent {
   constructor(
     private BigbagService: BigbagService,
   ) {
-    
     this.BigbagService.getweekproductionstat().subscribe((res) => {
       this.barChartData = res as unknown as ChartData<"bar", number[], unknown>;
-      console.log(res); 
+ 
     });
-
+    
   }
 
 }
