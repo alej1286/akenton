@@ -20,4 +20,13 @@ export class BigbagService {
   getBigbagCounted(): Observable<void> {
     return this.http.get<void>(this.baseurl + '/getBigbagCounted');
   }
+
+  
+  getweekproductionstat(): Observable<void> {
+    return this.http.get<void>(this.baseurl + '/getweekproductionstat');
+  }
+
+  
+
+
 }

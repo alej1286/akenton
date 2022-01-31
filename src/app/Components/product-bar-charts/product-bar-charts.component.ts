@@ -4,6 +4,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { BigbagService } from 'src/app/Services/bigbag.service';
 
 @Component({
   selector: 'app-product-bar-charts',
@@ -67,6 +68,17 @@ export class ProductBarChartsComponent {
       40 ];
 
     this.chart?.update();
+  }
+
+  constructor(
+    private BigbagService: BigbagService,
+  ) {
+    
+    this.BigbagService.getweekproductionstat().subscribe((res) => {
+      this.barChartData = res as unknown as ChartData<"bar", number[], unknown>;
+      console.log(res); 
+    });
+
   }
 
 }
